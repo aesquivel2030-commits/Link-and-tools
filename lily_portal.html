@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lily Project — Resource Hub</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, Helvetica, sans-serif; background: #d0d8e4; background-image: repeating-linear-gradient(0deg, transparent, transparent 24px, rgba(0,0,0,0.025) 25px); min-height: 100vh; }
+    .header { background: linear-gradient(180deg, #2a5080 0%, #1a3a5c 55%, #122840 100%); border-bottom: 4px solid #3a80c0; box-shadow: 0 3px 8px rgba(0,0,0,0.45); }
+    .header-inner { max-width: 980px; margin: 0 auto; padding: 16px 24px; display: flex; align-items: center; gap: 16px; }
+    .logo-box { width: 50px; height: 50px; flex-shrink: 0; background: linear-gradient(135deg, #3a80c0, #1d5a8a); border: 2px solid #5a9fd0; border-radius: 6px; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 1px 2px rgba(255,255,255,0.2), 0 2px 4px rgba(0,0,0,0.3); font-size: 24px; font-weight: bold; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.4); }
+    .header-title { color: #fff; font-size: 21px; font-weight: bold; letter-spacing: 0.4px; text-shadow: 0 1px 3px rgba(0,0,0,0.5); }
+    .header-sub { color: #88b8d8; font-size: 12px; margin-top: 3px; }
+    .header-badge { background: #c0392b; color: #fff; font-size: 10px; font-weight: bold; padding: 4px 11px; border-radius: 3px; letter-spacing: 0.5px; text-transform: uppercase; border: 1px solid #a93226; box-shadow: 0 1px 3px rgba(0,0,0,0.3); align-self: flex-start; margin-top: 4px; white-space: nowrap; }
+    .navbar { background: linear-gradient(180deg, #f5f5f5 0%, #dedede 100%); border-bottom: 2px solid #aaa; box-shadow: 0 2px 4px rgba(0,0,0,0.12); }
+    .navbar-inner { max-width: 980px; margin: 0 auto; padding: 0 24px; display: flex; flex-wrap: wrap; }
+    .nav-tab { padding: 8px 16px; font-size: 12px; font-weight: bold; color: #444; text-decoration: none; border-right: 1px solid #ccc; white-space: nowrap; }
+    .nav-tab:hover { background: rgba(0,0,0,0.07); color: #1a3a5c; }
+    .body { max-width: 980px; margin: 0 auto; padding: 22px 24px 40px; }
+    .welcome-box { background: linear-gradient(180deg, #eef4fb 0%, #ddeaf7 100%); border: 1px solid #b0cce8; border-left: 5px solid #2e6da4; border-radius: 4px; padding: 11px 16px; margin-bottom: 20px; font-size: 13px; color: #1a3a5c; line-height: 1.6; }
+    .section { margin-bottom: 20px; }
+    .section-header { background: linear-gradient(180deg, #3a5f80 0%, #2a4a6a 100%); color: #fff; font-size: 12px; font-weight: bold; letter-spacing: 0.8px; text-transform: uppercase; padding: 7px 14px; border-radius: 4px 4px 0 0; border: 1px solid #1a3a5c; border-bottom: none; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
+    .section-body { background: linear-gradient(180deg, #f8f9fc 0%, #edf1f7 100%); border: 1px solid #b8c8d8; border-top: none; border-radius: 0 0 4px 4px; padding: 14px; }
+    .btn-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+    .link-btn { display: flex; flex-direction: column; gap: 4px; padding: 11px 13px; text-decoration: none; background: linear-gradient(180deg, #f8fbff 0%, #dce8f5 55%, #c8d8ea 100%); border: 1px solid #8aafc8; border-bottom: 3px solid #5a80a0; border-radius: 5px; cursor: pointer; box-shadow: 0 2px 3px rgba(0,0,0,0.09); transition: all 0.08s ease; }
+    .link-btn:hover { background: linear-gradient(180deg, #eef5fc 0%, #ccdded 55%, #b8ccde 100%); border-color: #3a6a9a; border-bottom-color: #2a5078; box-shadow: 0 3px 6px rgba(0,0,0,0.14); }
+    .link-btn:active { background: linear-gradient(180deg, #c8d8ea 0%, #dce8f5 100%); border-top: 3px solid #5a80a0; border-bottom: 1px solid #8aafc8; box-shadow: inset 0 1px 3px rgba(0,0,0,0.15); transform: translateY(1px); }
+    .btn-icon { font-size: 18px; margin-bottom: 1px; }
+    .btn-label { font-size: 13px; font-weight: bold; color: #1a3a5c; line-height: 1.2; }
+    .btn-desc { font-size: 11px; color: #4a6a88; }
+    .link-btn.warn { background: linear-gradient(180deg, #fffbee 0%, #f5e8b8 55%, #e8d490 100%); border-color: #c8a840; border-bottom-color: #a08028; }
+    .link-btn.warn:hover { border-color: #a08028; }
+    .report-bar { background: linear-gradient(180deg, #fefefe 0%, #efefef 100%); border: 1px solid #c0c0c0; border-radius: 5px; padding: 14px 18px; display: flex; align-items: center; gap: 14px; margin-top: 22px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .report-icon { font-size: 28px; flex-shrink: 0; }
+    .report-text { flex: 1; font-size: 12px; color: #444; line-height: 1.6; }
+    .report-text strong { color: #1a3a5c; font-size: 13px; display: block; margin-bottom: 2px; }
+    .report-btns { display: flex; gap: 8px; flex-shrink: 0; flex-wrap: wrap; }
+    .report-btn { display: inline-block; padding: 7px 14px; font-size: 12px; font-weight: bold; text-decoration: none; border-radius: 4px; background: linear-gradient(180deg, #f5f5f5 0%, #d8d8d8 100%); border: 1px solid #aaa; border-bottom: 3px solid #888; color: #333; box-shadow: 0 1px 3px rgba(0,0,0,0.1); white-space: nowrap; }
+    .report-btn:hover { background: linear-gradient(180deg, #e8e8e8 0%, #c8c8c8 100%); }
+    .report-btn.primary { background: linear-gradient(180deg, #3a80c0 0%, #1a5a9a 100%); border-color: #1a4a80; border-bottom-color: #0e3060; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
+    .report-btn.primary:hover { background: linear-gradient(180deg, #2a70b0 0%, #0e4a8a 100%); }
+    .footer { background: linear-gradient(180deg, #1e3a58 0%, #122840 100%); border-top: 3px solid #2e6da4; padding: 12px 24px; text-align: center; font-size: 11px; color: #6a90b0; margin-top: 32px; }
+    .footer span { color: #3a6080; margin: 0 8px; }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="logo-box">L</div>
+    <div style="flex:1">
+      <div class="header-title">Lily Project &mdash; Resource Hub</div>
+      <div class="header-sub">Astrix &middot; LabVantage LVS Implementation &middot; Maintained by Melanny Camacho &amp; Andr&eacute;s Esquivel</div>
+    </div>
+    <div class="header-badge">Internal Use Only</div>
+  </div>
+</div>
+
+<div class="navbar">
+  <div class="navbar-inner">
+    <a href="#lv" class="nav-tab">LabVantage Environments</a>
+    <a href="#docs" class="nav-tab">Guides &amp; Docs</a>
+    <a href="#templates" class="nav-tab">Templates</a>
+    <a href="#tools" class="nav-tab">Tools &amp; Reports</a>
+    <a href="#training" class="nav-tab">Trainings</a>
+  </div>
+</div>
+
+<div class="body">
+
+  <div class="welcome-box">
+    <strong>Welcome to the Lily Project Hub.</strong> This page centralizes all key links for the Lily / LVS Implementation project at Astrix. Click any button to open the resource directly. If you find a broken link, use the report button at the bottom.
+  </div>
+
+  <!-- LabVantage Environments -->
+  <div class="section" id="lv">
+    <div class="section-header">&#128300;&nbsp; LabVantage Environments</div>
+    <div class="section-body">
+      <div class="btn-grid">
+        <a class="link-btn" href="https://ix1lbvpre1.am.lilly.com/labvantage/logon.jsp" target="_blank">
+          <span class="btn-icon">&#128994;</span>
+          <span class="btn-label">PRE-STG</span>
+          <span class="btn-desc">Official Building Environment</span>
+        </a>
+        <a class="link-btn" href="https://ix1lbvstg1.am.lilly.com/labvantage/logon.jsp?sso=n" target="_blank">
+          <span class="btn-icon">&#128309;</span>
+          <span class="btn-label">STG</span>
+          <span class="btn-desc">Method Verification Environment</span>
+        </a>
+        <a class="link-btn" href="https://ix1lbvtst1.am.lilly.com/labvantage/logon.jsp" target="_blank">
+          <span class="btn-icon">&#129514;</span>
+          <span class="btn-label">TST1</span>
+          <span class="btn-desc">Validation Environment</span>
+        </a>
+        <a class="link-btn" href="https://ix1lbvdev1.am.lilly.com/labvantage/logon.jsp?sso=n" target="_blank">
+          <span class="btn-icon">&#128295;</span>
+          <span class="btn-label">DEV1</span>
+          <span class="btn-desc">Development Environment 1</span>
+        </a>
+        <a class="link-btn" href="https://ix1lbvdev2.am.lilly.com/labvantage/logon.jsp?sso=n" target="_blank">
+          <span class="btn-icon">&#128295;</span>
+          <span class="btn-label">DEV2</span>
+          <span class="btn-desc">Development Environment 2</span>
+        </a>
+        <a class="link-btn" href="https://ix1lbvdev3a.am.lilly.com/labvantage/logon.jsp" target="_blank">
+          <span class="btn-icon">&#128295;</span>
+          <span class="btn-label">DEV3</span>
+          <span class="btn-desc">Development Environment 3</span>
+        </a>
+        <a class="link-btn" href="https://ix1lbvdev4.am.lilly.com/labvantage/logon.jsp?sso=n" target="_blank">
+          <span class="btn-icon">&#128295;</span>
+          <span class="btn-label">DEV4</span>
+          <span class="btn-desc">Development Environment 4</span>
+        </a>
+        <a class="link-btn" href="https://azdevmqlabvm1.azr.lilly.com/labvantage/logon.jsp" target="_blank">
+          <span class="btn-icon">&#128295;</span>
+          <span class="btn-label">DEV5</span>
+          <span class="btn-desc">Development Environment 5</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Guides & Docs -->
+  <div class="section" id="docs">
+    <div class="section-header">&#128196;&nbsp; Guides &amp; Documents</div>
+    <div class="section-body">
+      <div class="btn-grid">
+        <a class="link-btn" href="https://astrixtechgroup.sharepoint.com/:w:/s/LillyLVSImplementation/IQA2jAGwNXS_So9pG5bnqoKSAROQQCHwrKO2CWRf80EaFuo?wdExp=TEAMS-TREATMENT&web=1&isSPOFile=1" target="_blank">
+          <span class="btn-icon">&#128203;</span>
+          <span class="btn-label">New Jira Process Guide</span>
+          <span class="btn-desc">JUN 1, 2026 &mdash; latest</span>
+        </a>
+        <a class="link-btn" href="https://astrixtechgroup.sharepoint.com/:w:/r/sites/LillyLVSImplementation/_layouts/15/Doc2.aspx?action=edit&sourcedoc=%7B55f05a91-c049-46dc-b171-5aa2cd119d12%7D&wdExp=TEAMS-TREATMENT&web=1" target="_blank">
+          <span class="btn-icon">&#128221;</span>
+          <span class="btn-label">Jira Guide (original)</span>
+          <span class="btn-desc">JIRA process reference</span>
+        </a>
+        <a class="link-btn" href="https://astrixtechgroup.sharepoint.com/:w:/s/LillyLVSImplementation/EVebtFLxUiFBtKbTiKqmpYIBuuBtAJP3UU7bNr0gmd5yuw?e=xWi6wB" target="_blank">
+          <span class="btn-icon">&#128218;</span>
+          <span class="btn-label">Full Build Method Guide</span>
+          <span class="btn-desc">General configuration (Sep 25)</span>
+        </a>
+        <a class="link-btn" href="https://astrixtechgroup.sharepoint.com/:w:/s/LillyLVSImplementation/IQD9b35eDIFbTr14LzKmzqPOAWe0xCroK3g7zMvcuQyUP6U?e=82oYJU" target="_blank">
+          <span class="btn-icon">&#127807;</span>
+          <span class="btn-label">Full Build &mdash; Growth Promotion</span>
+          <span class="btn-desc">Updated Sep 26</span>
+        </a>
+        <a class="link-btn" href="https://astrixtechgroup.sharepoint.com/:w:/s/LillyLVSImplementation/Edyk5fotlMpJgpBpsXghw0IBJ5rx71B0863lrqDA-qvmAA?e=qQnO4a&isSPOFile=1" target="_blank">
+          <span class="btn-icon">&#128230;</span>
+          <span class="btn-label">Master Data Migration Guide</span>
+          <span class="btn-desc">MD migration process</span>
+        </a>
+        <a class="link-btn" href="https://astrixtechgroup.sharepoint.com/:w:/r/sites/LillyLVSImplementation/_layouts/15/Doc.aspx?sourcedoc=%7BB35753AD-680E-4695-9A71-10A6872B8E53%7D" target="_blank">
+          <span class="btn-icon">&#9881;</span>
+          <span class="btn-label">PROD Modification Request</span>
+          <span class="btn-desc">Guide updated Apr 16, 2026</span>
+        </a>
+        <a class="link-btn" href="https://astrixtechgroup.sharepoint.com/:w:/s/LillyLVSImplementation/IQBefJhlvjIaTarIEGzM_U_7Ac-h3VRNRBzuVFTEJGHeIWI?e=qPIR3G&isSPOFile=1" target="_blank">
+          <span class="btn-icon">&#129514;</span>
+          <span class="btn-label">Consumables DS &amp; Config Guide</span>
+          <span class="btn-desc">Design spec &amp; configuration</span>
+        </a>
+        <a class="link-btn" href="https://astrixtechgroup.sharepoint.com/sites/LillyLVSImplementation/Shared%20Documents/Delivery%20-%20Lilly%20LabVantage%20LIMS-LES/Delivery%20-%20Lilly%20LabVantage%20LIMS%20LES/12.%20MASTER%20DATA%20TEAM%20GENERAL%20INFORMATION/MD%20Processes%20GUIDES%20and%20Templates/Results%20Only%20Configuration%20Guide%20(Standardization%20Agreement).docx?d=w5767351b21994843ad0378c65f7b0a54" target="_blank">
+          <span class="btn-icon">&#128221;</span>
+          <span class="btn-label">Results Only Config Guide</span>
+          <span class="btn-desc">Standardization Agreement</span>
+        </a>
+        <a class="link-btn" href="https://astrixtechgroup.sharepoint.com/sites/LillyLVSImplementation/Shared%20Documents/Delivery%20-%20Lilly%20LabVantage%20LIMS-LES/Delivery%20-%20Lilly%20LabVantage%20LIMS%20LES/MASTER%20DATA%20VERIFICATION%20TEAM%20GENERAL%20INFORMATION/MDV%20PROCESS/ALM%20Defects%20creation%20Guide.docx?d=wc234654f5dba4a6499d038f465eede06" target="_blank">
+          <span class="btn-icon">&#128027;</span>
+          <span class="btn-label">ALM Defects Creation Guide</span>
+          <span class="btn-desc">Defect logging process</span>
+        </a>
+        <a class="link-btn" href="https://astrixtechgroup.sharepoint.com/sites/LillyLVSImplementation/Shared%20Documents/Delivery%20-%20Lilly%20LabVantage%20LIMS-LES/Delivery%20-%20Lilly%20LabVantage%20LIMS%20LES/12.%20MASTER%20DATA%20TEAM%20GENERAL%20INFORMATION/MD%20Processes%20GUIDES%20and%20Templates/EMPOWER%20GUIDES%20RECORDINGS/System%20Suitability%20as%20Consumable%20Configuration%20for%20EMPOWER%20Methods.docx?d=we9cfe5d231c2458aa5d24f14e1a76a92" target="_blank">
+          <span class="btn-icon">&#9879;</span>
+          <span class="btn-label">Sys. Suitability &mdash; Empower</span>
+          <span class="btn-desc">Consumable config for Empower</span>
+        </a>
+        <a class="link-btn" href="https://astrixtechgroup.sharepoint.com/sites/LillyLVSImplementation/Shared%20Documents/Delivery%20-%20Lilly%20LabVantage%20LIMS-LES/Delivery%20-%20Lilly%20LabVantage%20LIMS%20LES/12.%20MASTER%20DATA%20TEAM%20GENERAL%20INFORMATION/MD%20Processes%20GUIDES%20and%20Templates/Retesting%20Scenerios%20Approches%20Summary.docx?d=wfa7bf1a7939f4fda9fdecb7f633a01ad" target="_blank">
+          <span class="btn-icon">&#128260;</span>
+          <span class="btn-label">Retesting Scenarios Summary</span>
+          <span class="btn-desc">Approaches &amp; decision guide</span>
+        </a>
+        <a class="link-btn" href="https://astrixtechgroup-my.sharepoint.com/personal/jvargas_astrixinc_com/Documents/Standardized%20consumables%20guide%20for%20automatically%20populating%20values%20into%20Consumable%20Lot.docx?d=w1deaf8a261ff4c75a0cd174b4831d2a2" target="_blank">
+          <span class="btn-icon">&#129302;</span>
+          <span class="btn-label">Auto-Populate Consumable Lot</span>
+          <span class="btn-desc">Standardized consumables guide</span>
+        </a>
+        <a class="link-btn warn" href="https://astrixtechgroup.sharepoint.com/:w:/s/LillyLVSImplementation/ERYQO82cUWBIrllCzREvfuUB9cFMTo3kbMCQBgTFoqukng?e=DfeOkT&isSPOFile=1" target="_blank">
+          <span class="btn-icon">&#9888;&#65039;</span>
+          <span class="btn-label">Demos &amp; Preverification Guide</span>
+          <span class="btn-desc">Outdated &mdash; May 2026</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Templates -->
+  <div class="section" id="templates">
+    <div class="section-header">&#128210;&nbsp; Templates</div>
+    <div class="section-body">
+      <div class="btn-grid">
+        <a class="link-btn" href="https://collab.lilly.com/:x:/r/sites/LUNA-Globalprojectteam/_layouts/15/Doc.aspx?sourcedoc=%7B29EB28C7-2C0B-4833-8FCD-6FB0AE209ACA%7D" target="_blank">
+          <span class="btn-icon">&#128202;</span>
+          <span class="btn-label">Design Spec &mdash; LMR Template</span>
+          <span class="btn-desc">Current (shared by Rebekah)</span>
+        </a>
+        <a class="link-btn" href="https://collab.lilly.com/:x:/r/sites/LUNA-Globalprojectteam/_layouts/15/Doc.aspx?sourcedoc=%7BB12F8381-C105-4E74-9F7C-495490883C5E%7D" target="_blank">
+          <span class="btn-icon">&#128202;</span>
+          <span class="btn-label">Design Spec &mdash; Consumable Types</span>
+          <span class="btn-desc">Process not yet defined</span>
+        </a>
+        <a class="link-btn" href="https://collab.lilly.com/:f:/r/sites/LUNA-Globalprojectteam/Shared%20Documents/General/09.%20Master%20Data/Data%20Package%20Documents%20and%20Resources?csf=1&web=1&e=KBnAG7" target="_blank">
+          <span class="btn-icon">&#128193;</span>
+          <span class="btn-label">Design Specs Template Folder</span>
+          <span class="btn-desc">Data Package Documents</span>
+        </a>
+        <a class="link-btn" href="https://astrixtechgroup.sharepoint.com/:x:/r/sites/LillyLVSImplementation/_layouts/15/Doc2.aspx?action=edit&sourcedoc=%7B9b7179ee-f26d-4815-b214-b0100492ae5a%7D" target="_blank">
+          <span class="btn-icon">&#128203;</span>
+          <span class="btn-label">Requirements Tracker</span>
+          <span class="btn-desc">Line 42 tracker</span>
+        </a>
+        <a class="link-btn" href="https://astrixtechgroup-my.sharepoint.com/:x:/g/personal/mtorres_astrixinc_com/Efm6R7rawNlInpxGqCZcpyIBV2gmtJx2swZ_Y_PWYK5i4w?e=5M3HIa&isSPOFile=1" target="_blank">
+          <span class="btn-icon">&#128230;</span>
+          <span class="btn-label">Migration Contents Format</span>
+          <span class="btn-desc">Package content standard</span>
+        </a>
+        <a class="link-btn" href="https://collab.lilly.com/:x:/r/sites/NextGenLIMSLESImplementation/Shared%20Documents/Empower%20TM%20Peak%20naming.xlsx?d=w41042545cb3c49b198705a9f3ef48c62&csf=1&web=1&e=ob1jkY" target="_blank">
+          <span class="btn-icon">&#128200;</span>
+          <span class="btn-label">Empower Peak Naming</span>
+          <span class="btn-desc">TM peak naming convention</span>
+        </a>
+        <a class="link-btn" href="https://astrixtechgroup-my.sharepoint.com/personal/rgill_astrixinc_com/Documents/Microsoft%20Teams%20Chat%20Files/Naming%20Convention%20Guide%20(2).docx?d=w60cd0c8bb8654c9aa7c6b44775015269" target="_blank">
+          <span class="btn-icon">&#127991;&#65039;</span>
+          <span class="btn-label">Naming Convention Guide</span>
+          <span class="btn-desc">General naming rules</span>
+        </a>
+        <a class="link-btn" href="https://astrixtechgroup.sharepoint.com/:w:/s/LillyLVSImplementation/EWOhYdYPt-tNnmKp_kCnp6IB5g686Q6RujUrrL2StadesA?e=kRI7bw" target="_blank">
+          <span class="btn-icon">&#127991;&#65039;</span>
+          <span class="btn-label">Consumables Naming Rules</span>
+          <span class="btn-desc">New naming convention summary</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tools & Reports -->
+  <div class="section" id="tools">
+    <div class="section-header">&#128295;&nbsp; Tools &amp; Reports</div>
+    <div class="section-body">
+      <div class="btn-grid">
+        <a class="link-btn" href="https://app.powerbi.com/groups/me/reports/f230223e-a2ec-48df-9fa2-fdfec39784b0/7eea33db8600543940d0" target="_blank">
+          <span class="btn-icon">&#128202;</span>
+          <span class="btn-label">Power BI &mdash; Consumables</span>
+          <span class="btn-desc">PRE-STG report (via VM only)</span>
+        </a>
+        <a class="link-btn" href="https://tableau-edb.aws.lilly.com/#/site/GLIMS-QA/workbooks/13456/views" target="_blank">
+          <span class="btn-icon">&#128200;</span>
+          <span class="btn-label">Tableau</span>
+          <span class="btn-desc">GLIMS-QA workbooks</span>
+        </a>
+        <a class="link-btn" href="https://lilly.service-now.com/ec?id=sc_cat_item&table=sc_cat_item&sys_id=bc585f0a2b492ed07a5df4e3ce91bf83" target="_blank">
+          <span class="btn-icon">&#127915;</span>
+          <span class="btn-label">RITM Ticket Creation</span>
+          <span class="btn-desc">ServiceNow &mdash; create RITM</span>
+        </a>
+        <a class="link-btn" href="https://erpservices.atlassian.net/browse/LUNA-17560" target="_blank">
+          <span class="btn-icon">&#128196;</span>
+          <span class="btn-label">Confluence &mdash; LUNA-17560</span>
+          <span class="btn-desc">MD limiting Confluence updates</span>
+        </a>
+        <a class="link-btn" href="https://training.lilly.com/" target="_blank">
+          <span class="btn-icon">&#127891;</span>
+          <span class="btn-label">Lilly Trainings</span>
+          <span class="btn-desc">Official Lilly training portal</span>
+        </a>
+        <a class="link-btn" href="https://astrixtechgroup.sharepoint.com/:w:/r/sites/LillyLVSImplementation/_layouts/15/Doc2.aspx?action=edit&sourcedoc=%7B04c55cc2-b7b6-48ab-a599-5e2307d03854%7D" target="_blank">
+          <span class="btn-icon">&#128279;</span>
+          <span class="btn-label">Lilly Links &amp; Tools</span>
+          <span class="btn-desc">Lilly access document</span>
+        </a>
+        <a class="link-btn" href="https://astrixtechgroup.sharepoint.com/sites/LillyLVSImplementation/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FLillyLVSImplementation%2FShared%20Documents%2FDelivery%20%2D%20Lilly%20LabVantage%20LIMS%2DLES%2FDelivery%20%2D%20Lilly%20LabVantage%20LIMS%20LES%2F12%2E%20MASTER%20DATA%20TEAM%20GENERAL%20INFORMATION%2FMD%20Processes%20GUIDES%20and%20Templates&p=true&ga=1" target="_blank">
+          <span class="btn-icon">&#128194;</span>
+          <span class="btn-label">MD Processes &mdash; All Documents</span>
+          <span class="btn-desc">SharePoint folder</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Trainings & Recordings -->
+  <div class="section" id="training">
+    <div class="section-header">&#127916;&nbsp; Trainings &amp; Recordings</div>
+    <div class="section-body">
+      <div class="btn-grid">
+        <a class="link-btn" href="https://astrixtechgroup.sharepoint.com/:f:/s/LillyLVSImplementation/IgDgeg5fbpIqQ7DBdpbd7W12AZmJEPn_t-Ehd3ch550SDHA?e=xE1jZn" target="_blank">
+          <span class="btn-icon">&#127909;</span>
+          <span class="btn-label">Process Training Recordings</span>
+          <span class="btn-desc">All recorded sessions folder</span>
+        </a>
+        <a class="link-btn" href="https://astrixtechgroup.sharepoint.com/:v:/s/LillyLVSImplementation/IQAFm2pfNPTpSa6GNkO0K9FMAYToInBpXkcC4Q_mY8acyNQ?e=QNgpDg" target="_blank">
+          <span class="btn-icon">&#9654;&#65039;</span>
+          <span class="btn-label">MD &amp; MDV Confluence Recording</span>
+          <span class="btn-desc">New process meeting &mdash; MP4</span>
+        </a>
+        <a class="link-btn" href="https://astrixtechgroup-my.sharepoint.com/:b:/g/personal/jvargas_astrixinc_com/IQCF2v57remuSpdrLWUAV8B3AYhVxX5F16w-fd6z96K3WJg?e=JsL3JT" target="_blank">
+          <span class="btn-icon">&#128196;</span>
+          <span class="btn-label">Remove Change Logs &mdash; Guide</span>
+          <span class="btn-desc">PDF guide</span>
+        </a>
+        <a class="link-btn" href="https://astrixtechgroup-my.sharepoint.com/:b:/g/personal/eprieto_astrixinc_com/IQBWGjfd4uqjQpeXZTfUZ-EPAT6_NZQA50zyuMgUGk9Y_dA?e=2F5cah" target="_blank">
+          <span class="btn-icon">&#128196;</span>
+          <span class="btn-label">Save Island Files &mdash; Guide</span>
+          <span class="btn-desc">PDF guide</span>
+        </a>
+        <a class="link-btn" href="https://astrixtechgroup-my.sharepoint.com/:v:/g/personal/eprieto_astrixinc_com/IQBHN6Z0l5fISJAPtAPJwN-eAclmDpzmZFWUsxqDJJv-QyM?e=XrdAqX" target="_blank">
+          <span class="btn-icon">&#9654;&#65039;</span>
+          <span class="btn-label">Save Island Files &mdash; Recording</span>
+          <span class="btn-desc">Video walkthrough MP4</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Report Bar -->
+  <div class="report-bar">
+    <div class="report-icon">&#9993;&#65039;</div>
+    <div class="report-text">
+      <strong>Found a broken link?</strong>
+      Let us know and we'll get it fixed as soon as possible. Contact either of the page maintainers directly.
+    </div>
+    <div class="report-btns">
+      <a class="report-btn" href="mailto:aesquivel@astrixinc.com?subject=Broken link - Lily Hub&body=Hi Andres,%0D%0A%0D%0AI found a broken link on the Lily Resource Hub.%0D%0A%0D%0ALink name: %0D%0AURL: %0D%0A%0D%0AThanks" target="_blank">
+        &#128231; Email Andr&eacute;s
+      </a>
+      <a class="report-btn primary" href="mailto:aesquivel@astrixinc.com,mcamacho@astrixinc.com?subject=Broken link - Lily Hub&body=Hi,%0D%0A%0D%0AI found a broken link on the Lily Resource Hub.%0D%0A%0D%0ALink name: %0D%0AURL: %0D%0A%0D%0AThanks" target="_blank">
+        &#128232; Email Both Maintainers
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  Lily Project <span>|</span> Astrix LVS Implementation <span>|</span> Internal use only <span>|</span> Maintained by Melanny Camacho &amp; Andr&eacute;s Esquivel
+</div>
+
+</body>
+</html>
